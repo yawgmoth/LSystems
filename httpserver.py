@@ -48,8 +48,10 @@ class MyHandler(http.server.BaseHTTPRequestHandler):
             path = rule + "/" + angle + "/" + pieces
         (rule,angle,pieces) = lsystems.parse(path)
             
-        s.respond('<svg xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" height="480" width="640">') 
-        s.respond(lsystems.L(rule, angle,pieces)['X'](320,480,math.radians(270),[],160,"",0)[5])
+        s.respond('<svg xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" height="480" width="640">')
+        svg = lsystems.L(rule, angle,pieces)['X'](320,480,math.radians(270),[],160,"",0)[5]
+        for l in svg.split("\n"):
+            s.respond(l + "\n")
         s.respond('</svg>')
         s.respond('<form action="/" method="POST">')
         s.respond("<table>")
